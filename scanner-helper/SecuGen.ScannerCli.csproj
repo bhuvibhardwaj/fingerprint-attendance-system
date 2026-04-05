@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="SecuGen.FDxSDKPro.DotNet.Windows">
+      <HintPath>..\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\DotNET\Bin\x64\SecuGen.FDxSDKPro.DotNet.Windows.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\bin\x64\sgbledev.dll">
+      <Link>sgbledev.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\bin\x64\sgfdusdax64.dll">
+      <Link>sgfdusdax64.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\bin\x64\sgfpamx.dll">
+      <Link>sgfpamx.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\bin\x64\sgfplib.dll">
+      <Link>sgfplib.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\bin\x64\sgwsqlib.dll">
+      <Link>sgwsqlib.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
