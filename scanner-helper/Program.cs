@@ -1,4 +1,6 @@
 using System.Text.Json;
+using System.Drawing;
+using System.Drawing.Imaging;
 using SecuGen.FDxSDKPro.Windows;
 
 var command = args.Length > 0 ? args[0].ToLowerInvariant() : "help";
@@ -92,6 +94,7 @@ static void ExecuteCapture(Dictionary<string, string> options)
             {
                 success = true,
                 template = Convert.ToBase64String(template),
+                image = ConvertToPngBase64(image, info.ImageWidth, info.ImageHeight),
                 quality,
                 imageWidth = info.ImageWidth,
                 imageHeight = info.ImageHeight,
@@ -206,6 +209,23 @@ static int ReadInt(Dictionary<string, string> options, string key, int fallback)
 static string DecodeSerial(byte[] serialBytes)
 {
     return System.Text.Encoding.ASCII.GetString(serialBytes).TrimEnd('\0');
+}
+
+static string ConvertToPngBase64(byte[] imageData, int width, int height)
+{
+    using var bitmap = new Bitmap(width, height);
+    for (var x = 0; x < width; x++)
+    {
+        for (var y = 0; y < height; y++)
+        {
+            var gray = imageData[(y * width) + x];
+            bitmap.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+        }
+    }
+
+    using var stream = new MemoryStream();
+    bitmap.Save(stream, ImageFormat.Png);
+    return Convert.ToBase64String(stream.ToArray());
 }
 
 static void WriteJson(object payload)

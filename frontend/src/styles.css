@@ -196,6 +196,39 @@ label {
   gap: 0.75rem;
 }
 
+.preview-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview-label {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.fingerprint-preview,
+.preview-empty {
+  width: 220px;
+  max-width: 100%;
+  height: 280px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: white;
+}
+
+.fingerprint-preview {
+  object-fit: contain;
+  padding: 0.5rem;
+}
+
+.preview-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

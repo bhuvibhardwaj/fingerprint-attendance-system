@@ -13,6 +13,7 @@ const initialRegistration = {
   id: "",
   name: "",
   fingerprintTemplate: "",
+  fingerprintImage: "",
 };
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
   const [health, setHealth] = useState(null);
   const [message, setMessage] = useState({ type: "", text: "" });
   const [loading, setLoading] = useState(false);
+  const [attendancePreview, setAttendancePreview] = useState("");
 
   useEffect(() => {
     loadInitialData();
@@ -67,6 +69,7 @@ function App() {
       setRegistration((current) => ({
         ...current,
         fingerprintTemplate: result.template,
+        fingerprintImage: result.image ? `data:image/png;base64,${result.image}` : "",
       }));
       setMessage({
         type: "success",
@@ -115,6 +118,7 @@ function App() {
 
     try {
       const captureResult = await captureFingerprint({ userId: attendanceForm.id });
+      setAttendancePreview(captureResult.image ? `data:image/png;base64,${captureResult.image}` : "");
       // Verification stays server-side so the browser never handles matching logic directly.
       const verifyResult = await verifyFingerprint({
         id: attendanceForm.id,
@@ -163,6 +167,7 @@ function App() {
       });
       if (attendanceForm.id === user.id) {
         setAttendanceForm({ id: "" });
+        setAttendancePreview("");
       }
       await refreshUsersAndAttendance();
     } catch (error) {
@@ -229,15 +234,18 @@ function App() {
                   placeholder="Alex Morgan"
                 />
               </label>
-              <label className="full-width">
-                Fingerprint template
-                <textarea
-                  rows="5"
-                  readOnly
-                  value={registration.fingerprintTemplate}
-                  placeholder="Template will appear here after scan"
-                />
-              </label>
+              <div className="full-width preview-block">
+                <span className="preview-label">Fingerprint preview</span>
+                {registration.fingerprintImage ? (
+                  <img
+                    className="fingerprint-preview"
+                    src={registration.fingerprintImage}
+                    alt="Captured fingerprint preview"
+                  />
+                ) : (
+                  <div className="preview-empty">No scan yet</div>
+                )}
+              </div>
               <div className="actions full-width">
                 <button type="button" onClick={handleCaptureForEnrollment} disabled={loading}>
                   {loading ? "Scanning..." : "Scan"}
@@ -301,6 +309,18 @@ function App() {
                 <button onClick={handleCaptureForAttendance} disabled={loading}>
                   {loading ? "Checking..." : "Scan and Mark"}
                 </button>
+              </div>
+              <div className="full-width preview-block">
+                <span className="preview-label">Fingerprint preview</span>
+                {attendancePreview ? (
+                  <img
+                    className="fingerprint-preview"
+                    src={attendancePreview}
+                    alt="Attendance fingerprint preview"
+                  />
+                ) : (
+                  <div className="preview-empty">No scan yet</div>
+                )}
               </div>
             </div>
 

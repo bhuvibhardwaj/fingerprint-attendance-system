@@ -69,7 +69,7 @@ def capture():
     user_identifier = payload.get("userId") or payload.get("name")
 
     try:
-        # Capture returns a template only; raw fingerprint images are never stored.
+        # Capture returns a template for matching plus a preview image for the UI.
         capture_result = fingerprint_service.capture_template(user_identifier=user_identifier)
         return jsonify(
             {
